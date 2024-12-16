@@ -88,7 +88,7 @@ Example YAML files are available in the _samples directory:
 
 * `Dependency Injection`: The module follows Magento’s DI pattern for better flexibility
 * `Testing`: Unit tests are available under `Test/Unit`.
-* Code ia passing `phpstan-8` and `phpcs magento-coding-standsrds`
+* Code is passing `phpstan-8` and `phpcs magento-coding-standsrds`
 
 
   ![img.png](img.png)
