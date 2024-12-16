@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Qoliber. All rights reserved.
+ *
+ * @category    Qoliber
+ * @package     Qoliber_CatalogGenerator
+ * @author      Jakub Winkler <jwinkler@qoliber.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Qoliber\CatalogGenerator\Api\Reader\YamlReaderInterface"
+                type="Qoliber\CatalogGenerator\Reader\YamlReader"/>
+
+    <preference for="Qoliber\CatalogGenerator\Api\Config\CatalogConfigReaderInterface"
+                type="Qoliber\CatalogGenerator\Config\CatalogConfigReader"/>
+
+    <preference for="Qoliber\CatalogGenerator\Api\Service\CatalogGenerationServiceInterface"
+                type="Qoliber\CatalogGenerator\Service\CatalogGenerationService"/>
+
+    <preference for="Qoliber\CatalogGenerator\Api\Service\CleanUpServiceInterface"
+                type="Qoliber\CatalogGenerator\Service\CleanUpService"/>
+
+    <type name="Qoliber\CatalogGenerator\Api\EntityGeneratorInterface">
+        <arguments>
+            <argument name="dataPopulators" xsi:type="array">
+                <item name="category/attributes" xsi:type="object">
+                    Qoliber\CatalogGenerator\Data\Populators\CategoryAttributePopulator\Proxy
+                </item>
+                <item name="product/attributes" xsi:type="object">
+                    Qoliber\CatalogGenerator\Data\Populators\ProductAttributePopulator\Proxy
+                </item>
+            </argument>
+
+            <argument name="dataGenerators" xsi:type="array">
+                <item name="product/configurable" xsi:type="object">
+                    Qoliber\CatalogGenerator\Data\Generators\Product\ConfigurableProductDataGenerator\Proxy
+                </item>
+                <item name="product/bundle" xsi:type="object">
+                    Qoliber\CatalogGenerator\Data\Generators\Product\BundleProductDataGenerator\Proxy
+                </item>
+                <item name="product/grouped" xsi:type="object">
+                    Qoliber\CatalogGenerator\Data\Generators\Product\GroupedProductDataGenerator\Proxy
+                </item>
+            </argument>
+
+            <argument name="dataResolvers" xsi:type="array">
+                <item name="name"
+                      xsi:type="object" >Qoliber\CatalogGenerator\Resolver\NameResolver\Proxy</item>
+            </argument>
+
+            <argument name="tasks" xsi:type="array">
+                <item name="category:generate_url_attributes"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Category\UrlAttributeGeneratorTask\Proxy</item>
+                <item name="category:generate_urls"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Category\UrlGeneratorTask\Proxy</item>
+                <item name="product:assign_to_categories"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\AssignToCategories\Proxy</item>
+                <item name="product:generate_url_keys"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\GenerateUrlKeys\Proxy</item>
+                <item name="product:generate_urls"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\UrlGeneratorTask\Proxy</item>
+                <item name="product:generate_images"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\ImageGeneratorTask\Proxy</item>
+                <item name="product:assign_stock"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\AssignStockTask\Proxy</item>
+                <item name="product:assign_to_websites"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Product\AssignToWebsitesTask\Proxy</item>
+                <item name="website:assign_sales_channel"
+                      xsi:type="object">Qoliber\CatalogGenerator\Task\Website\AssignSalesChannel\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Qoliber\CatalogGenerator\Api\Service\CatalogGenerationServiceInterface">
+        <arguments>
+            <argument name="entityGenerators" xsi:type="array">
+                <item name="website"
+                      xsi:type="object">Qoliber\CatalogGenerator\Data\Generators\WebsiteGenerator\Proxy</item>
+                <item name="customer_group"
+                      xsi:type="object">Qoliber\CatalogGenerator\Data\Generators\CustomerGroupGenerator\Proxy</item>
+                <item name="category"
+                      xsi:type="object">Qoliber\CatalogGenerator\Data\Generators\CategoryGenerator\Proxy</item>
+                <item name="product"
+                      xsi:type="object">Qoliber\CatalogGenerator\Data\Generators\ProductGenerator\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="qoliber_catalog_generator"
+                      xsi:type="object">Qoliber\CatalogGenerator\Console\CatalogGenerator</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
