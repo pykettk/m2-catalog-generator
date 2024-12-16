@@ -1,6 +1,7 @@
 {
     "name": "qoliber/m2-catalog-generator",
     "version": "1.0.0",
+    "license": "MIT",
     "type": "magento2-module",
     "source": {
         "type": "git",
